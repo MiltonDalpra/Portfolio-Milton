@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://miltondalpra.com/sitemap.xml
