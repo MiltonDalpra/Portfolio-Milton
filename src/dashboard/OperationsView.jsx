@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import { Loader2, AlertCircle, ClipboardCheck, ShieldAlert } from 'lucide-react';
 import { useAuditData } from '../hooks/useAuditData';
 
-const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQRSeEHG81Nizo3RkHYw3gv6cF_ZIwAYusaD9CDOej_SCDVRLyzcFJXsXK7DqI-LQ22tKSj2PFspMZO/pub?output=csv';
+const savedSettings = JSON.parse(localStorage.getItem('md_audit_settings') || '{}');
+const GOOGLE_SHEETS_CSV_URL = savedSettings.sheetUrl || '';
 
 export default function OperationsView() {
     const { data, loading, error } = useAuditData(GOOGLE_SHEETS_CSV_URL, 'gestion');

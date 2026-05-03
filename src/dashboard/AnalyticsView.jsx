@@ -5,7 +5,8 @@ import { Loader2, AlertCircle } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useAuditData } from '../hooks/useAuditData';
 
-const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQRSeEHG81Nizo3RkHYw3gv6cF_ZIwAYusaD9CDOej_SCDVRLyzcFJXsXK7DqI-LQ22tKSj2PFspMZO/pub?output=csv';
+const savedSettings = JSON.parse(localStorage.getItem('md_audit_settings') || '{}');
+const GOOGLE_SHEETS_CSV_URL = savedSettings.sheetUrl || '';
 
 export default function AnalyticsView() {
     const { data, loading, error } = useAuditData(GOOGLE_SHEETS_CSV_URL, 'auditoria_bi');
@@ -67,7 +68,7 @@ export default function AnalyticsView() {
                     <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-6">Tendencias Mensuales</h3>
                     <div className="h-72">
                         <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={data} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                            <LineChart data={data.filter(item => item.periodo && !String(item.periodo).toUpperCase().includes('Q'))} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
                                 <XAxis dataKey="periodo" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
                                 <YAxis stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
